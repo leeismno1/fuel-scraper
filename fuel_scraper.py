@@ -51,59 +51,14 @@ listed_fuel_watch_urls = gen_fuel(fuel_types, regions, day)
 
 fuel_data = get_fuel_data(listed_fuel_watch_urls)
 
-pprint(fuel_data, indent=4)
+# pprint(fuel_data, indent=4)
 
+# print(fuel_data)
 
-"""
+fuel_data_string = str(fuel_data)
+fuel_data_html = "<html><title>Fuel Report</title><body>" + fuel_data_string + "</body></html>"
 
-
-def gen_fuel(fuel_types):
-    for each in fuel_types:
-        result = ('http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=' +str(each)+ '&Region=25&Day=today')
-        print(result)
-
-fuel_types = [1, 2, 6]
-gen_fuel(fuel_types)
-
-def gen_days(days):
-    for each_day in days:
-        result = ('http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=6&Region=25&Day='+each_day)
-        print(result)
-
-days = ['today', 'tomorrow']
-gen_days(days)
-
-
-def gen_region(region):
-    for location in region:
-        result = ('http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=6&Region='+str(location)+'&Day=today')
-        print(result)
-
-region = [25, 27]
-gen_region(region)
-
-def get_prices(day):
-    data = requests.get('http://www.fuelwatch.wa.gov.au/fuelwatch/fuelWatchRSS?Product=6&Region=25&Day=')
-    dataContent = ET.fromstring(data.content)
-
-
-
-    allItems = dataContent.findall('.//item')
-    list_of_dicts = []
-    for info in allItems:
-
-        price = info.find('price').text
-        address = info.find('address').text
-        location = info.find('location').text
-        name = info.find('trading-name').text
-
-        data_dict =  {
-            'price': price,
-            'address': address,
-            'location': location,
-            'name': name,
-        }
-        list_of_dicts.append(data_dict)
-
-    data1 = sorted(list_of_dicts, key=lambda k: k ['price'])"""
+fuel_file = open('fuel_report.html', 'w')
+fuel_file.write(fuel_data_html)
+fuel_file.close
 
