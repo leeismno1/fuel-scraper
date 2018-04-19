@@ -56,13 +56,22 @@ fuel_data = get_fuel_data(listed_fuel_watch_urls)
 
 # pprint(fuel_data, indent=4)
 
-# print(fuel_data)
-
 # converts the list of dictionaries a string.
-fuel_data_string = str(fuel_data)
+# fuel_data_string = str(fuel_data)
+
+""" Empty string fuel_data_rows_string is created, a for loop iterates over fuel_data which contains the list 
+of dictionaries and adds the value for keys price, address, location and name into a row which is contained in a string"""
+fuel_data_rows_string = ""
+
+for value in fuel_data:
+    fuel_data_rows_string += """
+        <tr>
+            <td>{price} </td><td>{address} </td><td>{location} </td><td>{name}</td>
+        </tr>
+    """.format(**value)
 
 # Formats the html.
-fuel_data_html = "<html><title>Fuel Report</title><body>" + fuel_data_string + "</body></html>"
+fuel_data_html = "<html><title>Fuel Report</title><body><tbody><table>" + fuel_data_rows_string + "</table></tbody></body></html>"
 
 # Opens and creates a file named fuel_report.html with write access.
 fuel_file = open('fuel_report.html', 'w')
@@ -71,5 +80,5 @@ fuel_file = open('fuel_report.html', 'w')
 fuel_file.write(fuel_data_html)
 
 # Closes fuel_report.html.
-fuel_file.close
+fuel_file.close()
 
